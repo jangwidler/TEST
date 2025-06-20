@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Complet Prompt Engineering 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f0f9ff 0%, #faf5ff 50%, #fdf2f8 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #2563eb, #7c3aed, #db2777);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+
+        .navigation {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .nav-tabs {
+            display: flex;
+            overflow-x: auto;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-tab {
+            padding: 1rem 0.5rem;
+            margin-right: 2rem;
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            font-weight: 500;
+            color: #6b7280;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 0.9rem;
+        }
+
+        .nav-tab:hover {
+            color: #374151;
+            border-bottom-color: #d1d5db;
+        }
+
+        .nav-tab.active {
+            color: #7c3aed;
+            border-bottom-color: #7c3aed;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .principle-card {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .principle-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .principle-header:hover {
+            background-color: #f9fafb;
+        }
+
+        .principle-content {
+            padding: 0 1.5rem 1.5rem;
+            border-top: 1px solid #e5e7eb;
+            display: none;
+        }
+
+        .principle-content.show {
+            display: block;
+        }
+
+        .principle-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .principle-description {
+            color: #6b7280;
+            margin-top: 0.25rem;
+        }
+
+        .principle-details {
+            color: #374151;
+            line-height: 1.6;
+            padding-top: 1rem;
+        }
+
+        .expand-icon {
+            font-size: 1.5rem;
+            color: #9ca3af;
+        }
+
+        .error-item, .practice-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .error-item {
+            background-color: #fef2f2;
+        }
+
+        .practice-item {
+            background-color: #f0fdf4;
+        }
+
+        .error-icon {
+            color: #ef4444;
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        .practice-icon {
+            color: #22c55e;
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        .alert {
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid;
+            margin-top: 1.5rem;
+        }
+
+        .alert-error {
+            background-color: #fef2f2;
+            border-left-color: #f87171;
+        }
+
+        .alert-success {
+            background-color: #f0fdf4;
+            border-left-color: #4ade80;
+        }
+
+        .alert-info {
+            background-color: #eff6ff;
+            border-left-color: #60a5fa;
+        }
+
+        .framework-code {
+            background-color: #f3f4f6;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            margin: 1rem 0;
+        }
+
+        .code-line {
+            margin: 0.5rem 0;
+        }
+
+        .quiz-question {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+        }
+
+        .quiz-question-header {
+            padding: 1rem;
+            background-color: #f9fafb;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .quiz-question-header:hover {
+            background-color: #f3f4f6;
+        }
+
+        .quiz-answer {
+            padding: 1rem;
+            background-color: white;
+            border-top: 1px solid #e5e7eb;
+            display: none;
+        }
+
+        .quiz-answer.show {
+            display: block;
+        }
+
+        .implementation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .implementation-card {
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .yellow-card { background-color: #fefce8; }
+        .purple-card { background-color: #faf5ff; }
+        .indigo-card { background-color: #eef2ff; }
+        .pink-card { background-color: #fdf2f8; }
+
+        .card-subtitle {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-text {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .nav-tabs {
+                gap: 0.5rem;
+            }
+            
+            .nav-tab {
+                margin-right: 1rem;
+                font-size: 0.8rem;
+            }
+            
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <h1 class="title">Guide Complet Prompt Engineering 2025</h1>
+            <p class="subtitle">Formation avancee a l'art et la science du prompt engineering</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation">
+        <div class="nav-content">
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-tab="overview">Vue d'ensemble</button>
+                <button class="nav-tab" data-tab="principles">Principes</button>
+                <button class="nav-tab" data-tab="errors">Erreurs a eviter</button>
+                <button class="nav-tab" data-tab="practices">Bonnes pratiques</button>
+                <button class="nav-tab" data-tab="implementation">Mise en pratique</button>
+                <button class="nav-tab" data-tab="quiz">Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <!-- Vue d'ensemble -->
+        <div class="tab-content active" id="overview">
+            <div class="card">
+                <h3 class="card-title">Introduction</h3>
+                <p>Le prompt engineering est l'art et la science de concevoir des instructions precises et efficaces pour les modeles d'intelligence artificielle generative. Cette discipline emergente combine linguistique, psychologie cognitive et informatique pour optimiser les interactions avec l'IA.</p>
+            </div>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <h4 class="card-title">Competences cles</h4>
+                    <ul>
+                        <li>• Communication efficace avec l'IA</li>
+                        <li>• Structure et methodologie</li>
+                        <li>• Iteration et optimisation</li>
+                        <li>• Adaptation aux contextes</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">Applications</h4>
+                    <ul>
+                        <li>• Education et formation</li>
+                        <li>• Entreprise et productivite</li>
+                        <li>• Creativite et innovation</li>
+                        <li>• Recherche et analyse</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Principes -->
+        <div class="tab-content" id="principles">
+            <div class="principle-card">
+                <div class="principle-header" onclick="togglePrinciple('contexte')">
+                    <div>
+                        <h3 class="principle-title">Contexte</h3>
+                        <p class="principle-description">Information d'arriere-plan pour situer la demande</p>
+                    </div>
+                    <span class="expand-icon" id="icon-contexte">+</span>
+                </div>
+                <div class="principle-content" id="content-contexte">
+                    <p class="principle-details">Le contexte fournit le cadre situationnel necessaire pour que l'IA comprenne l'environnement et les circonstances de votre demande. Il limite le champ d'interpretation et permet une reponse plus ciblee.</p>
+                </div>
+            </div>
+
+            <div class="principle-card">
+                <div class="principle-header" onclick="togglePrinciple('intention')">
+                    <div>
+                        <h3 class="principle-title">Intention</h3>
+                        <p class="principle-description">Objectif clair et but de la requete</p>
+                    </div>
+                    <span class="expand-icon" id="icon-intention">+</span>
+                </div>
+                <div class="principle-content" id="content-intention">
+                    <p class="principle-details">L'intention definit precisement ce que vous voulez obtenir. Elle oriente l'IA vers un resultat specifique et mesurable, evitant les reponses vagues ou hors-sujet.</p>
+                </div>
+            </div>
+
+            <div class="principle-card">
+                <div class="principle-header" onclick="togglePrinciple('contraintes')">
+                    <div>
+                        <h3 class="principle-title">Contraintes</h3>
+                        <p class="principle-description">Limites et parametres specifiques</p>
+                    </div>
+                    <span class="expand-icon" id="icon-contraintes">+</span>
+                </div>
+                <div class="principle-content" id="content-contraintes">
+                    <p class="principle-details">Les contraintes guident activement la qualite de la reponse en definissant des limites claires : longueur, format, style, elements a inclure ou exclure.</p>
+                </div>
+            </div>
+
+            <div class="principle-card">
+                <div class="principle-header" onclick="togglePrinciple('clarte')">
+                    <div>
+                        <h3 class="principle-title">Clarte</h3>
+                        <p class="principle-description">Formulation precise et sans ambiguite</p>
+                    </div>
+                    <span class="expand-icon" id="icon-clarte">+</span>
+                </div>
+                <div class="principle-content" id="content-clarte">
+                    <p class="principle-details">La clarte elimine les interpretations multiples et assure que l'IA comprend exactement ce qui est attendu. Utilisez un vocabulaire precis et des instructions non ambigues.</p>
+                </div>
+            </div>
+
+            <div class="principle-card">
+                <div class="principle-header" onclick="togglePrinciple('output')">
+                    <div>
+                        <h3 class="principle-title">Format de sortie</h3>
+                        <p class="principle-description">Format et nature du resultat attendu</p>
+                    </div>
+                    <span class="expand-icon" id="icon-output">+</span>
+                </div>
+                <div class="principle-content" id="content-output">
+                    <p class="principle-details">Specifier le format de sortie (liste, paragraphe, tableau, etc.) permet d'obtenir des resultats structures et utilisables directement pour vos besoins.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Erreurs -->
+        <div class="tab-content" id="errors">
+            <div class="card">
+                <h3 class="card-title" style="color: #dc2626;">Erreurs frequentes a eviter</h3>
+                
+                <div class="error-item">
+                    <span class="error-icon">⚠</span>
+                    <p><strong>Formulation ambigue</strong> - Instructions vagues qui laissent trop de place a l'interpretation</p>
+                </div>
+                
+                <div class="error-item">
+                    <span class="error-icon">⚠</span>
+                    <p><strong>Sous-specification</strong> - Manque de details ou contraintes precises</p>
+                </div>
+                
+                <div class="error-item">
+                    <span class="error-icon">⚠</span>
+                    <p><strong>Surcharge cognitive</strong> - Trop d'instructions contradictoires dans un meme prompt</p>
+                </div>
+                
+                <div class="error-item">
+                    <span class="error-icon">⚠</span>
+                    <p><strong>Contextualisation insuffisante</strong> - Absence d'information sur le contexte d'utilisation</p>
+                </div>
+                
+                <div class="error-item">
+                    <span class="error-icon">⚠</span>
+                    <p><strong>Absence d'iteration</strong> - Se contenter du premier essai sans affiner</p>
+                </div>
+                
+                <div class="error-item">
+                    <span class="error-icon">⚠</span>
+                    <p><strong>Confiance excessive</strong> - Oublier de verifier l'exactitude des informations generees</p>
+                </div>
+            </div>
+            
+            <div class="alert alert-error">
+                <h4 style="color: #991b1b; margin-bottom: 0.5rem;">Conseil d'expert</h4>
+                <p style="color: #b91c1c;">Relisez vos prompts a la recherche d'ambiguites, divisez les taches complexes en sous-prompts, et adoptez toujours une approche iterative.</p>
+            </div>
+        </div>
+
+        <!-- Bonnes pratiques -->
+        <div class="tab-content" id="practices">
+            <div class="card">
+                <h3 class="card-title" style="color: #059669;">Bonnes pratiques essentielles</h3>
+                
+                <div class="practice-item">
+                    <span class="practice-icon">✓</span>
+                    <p><strong>Iterer regulierement</strong> - Affinez par cycles d'essais successifs</p>
+                </div>
+                
+                <div class="practice-item">
+                    <span class="practice-icon">✓</span>
+                    <p><strong>Documenter les reussites</strong> - Conservez une bibliotheque de prompts efficaces</p>
+                </div>
+                
+                <div class="practice-item">
+                    <span class="practice-icon">✓</span>
+                    <p><strong>Solliciter des feedbacks</strong> - Demandez l'avis pour identifier les angles morts</p>
+                </div>
+                
+                <div class="practice-item">
+                    <span class="practice-icon">✓</span>
+                    <p><strong>Mesurer les performances</strong> - Etablissez des metriques claires d'evaluation</p>
+                </div>
+                
+                <div class="practice-item">
+                    <span class="practice-icon">✓</span>
+                    <p><strong>Reformuler intelligemment</strong> - Identifiez la cause avant de reformuler</p>
+                </div>
+                
+                <div class="practice-item">
+                    <span class="practice-icon">✓</span>
+                    <p><strong>Gerer les attentes</strong> - Soyez realiste sur les capacites du modele</p>
+                </div>
+                
+                <div class="practice-item">
+                    <span class="practice-icon">✓</span>
+                    <p><strong>Personnaliser par modele</strong> - Adaptez aux specificites de chaque IA</p>
+                </div>
+                
+                <div class="practice-item">
+                    <span class="practice-icon">✓</span>
+                    <p><strong>Pratiquer regulierement</strong> - L'art s'ameliore avec la pratique constante</p>
+                </div>
+            </div>
+            
+            <div class="alert alert-success">
+                <h4 style="color: #065f46; margin-bottom: 0.5rem;">Framework RCTFC</h4>
+                <p style="color: #047857;"><strong>R</strong>ole → <strong>C</strong>ontexte → <strong>T</strong>ache → <strong>F</strong>ormat → <strong>C</strong>ontraintes</p>
+            </div>
+        </div>
+
+        <!-- Mise en pratique -->
+        <div class="tab-content" id="implementation">
+            <div class="card">
+                <h3 class="card-title" style="color: #2563eb;">Mise en pratique</h3>
+                
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem;">1. Structure recommandee</h4>
+                    <div class="framework-code">
+                        <div class="code-line"><span style="color: #2563eb;">Role:</span> Tu es un expert en...</div>
+                        <div class="code-line"><span style="color: #059669;">Contexte:</span> J'ai besoin de...</div>
+                        <div class="code-line"><span style="color: #7c3aed;">Tache:</span> Cree/Analyse/Genere...</div>
+                        <div class="code-line"><span style="color: #ea580c;">Format:</span> Structure en...</div>
+                        <div class="code-line"><span style="color: #dc2626;">Contraintes:</span> Maximum X mots...</div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem;">2. Exemple concret</h4>
+                    <div class="alert alert-info">
+                        <p><strong>Role:</strong> Tu es un analyste de donnees expert.<br/>
+                        <strong>Contexte:</strong> J'ai des donnees de ventes trimestrielles sur 3 ans.<br/>
+                        <strong>Tache:</strong> Identifie les 3 tendances principales.<br/>
+                        <strong>Format:</strong> Pour chaque tendance : titre, description, recommandation.<br/>
+                        <strong>Contraintes:</strong> Langage accessible, chiffres precis, factuel.</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem;">3. Actions indispensables</h4>
+                    <div class="implementation-grid">
+                        <div class="implementation-card yellow-card">
+                            <h5 class="card-subtitle" style="color: #92400e;">Documentation</h5>
+                            <p class="card-text" style="color: #a16207;">Archiver tous vos prompts efficaces</p>
+                        </div>
+                        <div class="implementation-card purple-card">
+                            <h5 class="card-subtitle" style="color: #6b21a8;">Iteration</h5>
+                            <p class="card-text" style="color: #7c2d92;">Raffiner systematiquement</p>
+                        </div>
+                        <div class="implementation-card indigo-card">
+                            <h5 class="card-subtitle" style="color: #3730a3;">Veille</h5>
+                            <p class="card-text" style="color: #4338ca;">Suivre les evolutions des modeles</p>
+                        </div>
+                        <div class="implementation-card pink-card">
+                            <h5 class="card-subtitle" style="color: #be185d;">Collaboration</h5>
+                            <p class="card-text" style="color: #be1e6e;">Echanger avec d'autres experts</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz -->
+        <div class="tab-content" id="quiz">
+            <div class="card">
+                <h3 class="card-title" style="color: #7c3aed;">Quiz Prompt Engineering</h3>
+                <p style="color: #6b7280; margin-bottom: 1.5rem;">Cliquez sur chaque question pour reveler la reponse</p>
+                
+                <div id="quiz-container">
+                    <!-- Questions will be generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Quiz questions data
+        const quizQuestions = [
+            {
+                question: "Qu'est-ce que le prompt engineering ?",
+                answer: "L'art et la science de concevoir des instructions precises et efficaces pour les modeles d'intelligence artificielle generative afin d'obtenir les resultats souhaites."
+            },
+            {
+                question: "Quels sont les 5 elements de base d'un prompt efficace ?",
+                answer: "Contexte, Intention, Contraintes, Clarte, et Format de sortie (Output)"
+            },
+            {
+                question: "Quelle est la difference entre zero-shot et few-shot ?",
+                answer: "Zero-shot : aucun exemple fourni, le modele s'appuie sur ses connaissances. Few-shot : quelques exemples fournis pour guider le format et type de reponse attendus."
+            },
+            {
+                question: "Qu'est-ce que la technique Chain-of-Thought ?",
+                answer: "Une methode qui invite le modele a decomposer son raisonnement en etapes intermediaires explicites, particulierement efficace pour les taches de raisonnement complexe."
+            },
+            {
+                question: "Pourquoi faut-il eviter la surcharge cognitive dans un prompt ?",
+                answer: "Trop d'instructions contradictoires ou complexes depassent les capacites d'analyse du modele et degradent la qualite des reponses."
+            },
+            {
+                question: "Quelle est l'importance du contexte dans un prompt ?",
+                answer: "Le contexte limite le champ d'interpretation, situe la demande et permet une reponse plus ciblee et pertinente."
+            },
+            {
+                question: "Que signifie 'prompts courts vs prompts longs' ?",
+                answer: "Prompts courts : rapides mais manquent de contexte. Prompts longs : plus de controle et contexte mais risque de complexite excessive."
+            },
+            {
+                question: "Qu'est-ce que le meta-prompting ?",
+                answer: "Instructions pour generer d'autres prompts, permettant au modele de s'auto-ameliorer ou d'adapter ses propres instructions."
+            },
+            {
+                question: "Pourquoi documenter ses prompts efficaces ?",
+                answer: "Pour constituer une bibliotheque personnelle, eviter de reinventer, et ameliorer sa pratique en analysant les patterns de succes."
+            },
+            {
+                question: "Quelle est la regle d'or pour la longueur d'un prompt ?",
+                answer: "Un prompt efficace ne se mesure pas a sa longueur mais a sa capacite a communiquer clairement l'intention et contraindre utilement le modele."
+            },
+            {
+                question: "Qu'est-ce que l'iteration dans le prompt engineering ?",
+                answer: "Le processus d'amelioration progressive d'un prompt par cycles d'essais successifs et d'ajustements bases sur les resultats."
+            },
+            {
+                question: "Comment evaluer l'efficacite d'un prompt ?",
+                answer: "Par trois indicateurs cles : Pertinence (repond a l'intention), Efficience (nombre d'iterations necessaires), Coherence (consistance des resultats)."
+            },
+            {
+                question: "Qu'est-ce qu'un prompt role/persona ?",
+                answer: "Attribution d'un role specifique a l'IA pour orienter son comportement et ses reponses (ex: 'Agis comme un expert en marketing')."
+            },
+            {
+                question: "Pourquoi utiliser des contraintes dans un prompt ?",
+                answer: "Les contraintes guident la qualite de la reponse en definissant des limites claires et paradoxalement augmentent souvent la creativite."
+            },
+            {
+                question: "Qu'est-ce que le Tree-of-Thought ?",
+                answer: "Extension du Chain-of-Thought qui explore plusieurs branches de raisonnement simultanement pour evaluer differentes pistes."
+            },
+            {
+                question: "Comment adapter un prompt selon le modele d'IA ?",
+                answer: "GPT-4 : prompts complexes et detailles. Claude : contexte etendu et structure claire. Gemini : multimodal et structure des attentes."
+            },
+            {
+                question: "Qu'est-ce que le prompt journaling ?",
+                answer: "Pratique de noter systematiquement ses essais, ajustements et resultats pour constituer une base de connaissances personnelle."
+            },
+            {
+                question: "Quelle est l'erreur la plus frequente en prompt engineering ?",
+                answer: "La formulation ambigue : instructions vagues ou contradictoires qui laissent trop de place a l'interpretation."
+            },
+            {
+                question: "Comment structurer un prompt educatif efficace ?",
+                answer: "Definir le role pedagogique, specifier le niveau, les competences cibles, la duree, inclure contexte et criteres d'evaluation."
+            },
+            {
+                question: "Qu'est-ce que l'auto-critique integree ?",
+                answer: "Technique avancee qui inclut dans le prompt une demande d'evaluation de la qualite de la reponse par l'IA elle-meme."
+            },
+            {
+                question: "Pourquoi personnaliser ses prompts par secteur ?",
+                answer: "Chaque domaine a sa terminologie, ses contraintes reglementaires et ses attentes specifiques qui necessitent une adaptation."
+            },
+            {
+                question: "Comment mesurer la performance d'un prompt ?",
+                answer: "Tests A/B, evaluation experte, tests utilisateurs, et indicateurs de pertinence, efficience et coherence."
+            },
+            {
+                question: "Qu'est-ce que le prompting automatise ?",
+                answer: "Generation et optimisation programmatique de prompts via des algorithmes adaptatifs pour ameliorer les performances."
+            },
+            {
+                question: "Quelle est l'importance de la veille technologique ?",
+                answer: "Suivre l'evolution des modeles, nouvelles techniques et retours d'experience pour rester a jour et optimiser sa pratique."
+            },
+            {
+                question: "Comment eviter la contextualisation insuffisante ?",
+                answer: "Toujours fournir le cadre situationnel, l'audience cible et l'usage prevu des resultats generes."
+            },
+            {
+                question: "Qu'est-ce que les embeddings en prompt engineering ?",
+                answer: "Exploitation des representations vectorielles pour creer des prompts semantiquement enrichis et contextualises."
+            },
+            {
+                question: "Comment optimiser un prompt pour la creativite ?",
+                answer: "Utiliser des contraintes creatives, encourager l'approche non conventionnelle, combiner des domaines non relies."
+            },
+            {
+                question: "Quelle est la tendance future du prompt engineering ?",
+                answer: "Prompting automatise, multimodal (texte+images), et emergence de bibliotheques standardisees par domaine."
+            },
+            {
+                question: "Comment collaborer efficacement en prompt engineering ?",
+                answer: "Echanger des decouvertes, utiliser des plateformes collaboratives, documenter et partager les bonnes pratiques."
+            },
+            {
+                question: "Qu'est-ce que le calibrage de temperature ?",
+                answer: "Ajuster le parametre de temperature selon le besoin : basse pour precision/factuel, haute pour creativite/originalite."
+            }
+        ];
+
+        // Tab switching functionality
+        function switchTab(tabId) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Remove active class from all nav tabs
+            const navTabs = document.querySelectorAll('.nav-tab');
+            navTabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected tab content
+            document.getElementById(tabId).classList.add('active');
+
+            // Add active class to clicked nav tab
+            document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+        }
+
+        // Principle toggle functionality
+        function togglePrinciple(principleId) {
+            const content = document.getElementById(`content-${principleId}`);
+            const icon = document.getElementById(`icon-${principleId}`);
+            
+            if (content.classList.contains('show')) {
+                content.classList.remove('show');
+                icon.textContent = '+';
+            } else {
+                content.classList.add('show');
+                icon.textContent = '−';
+            }
+        }
+
+        // Quiz toggle functionality
+        function toggleQuizAnswer(index) {
+            const answer = document.getElementById(`quiz-answer-${index}`);
+            const icon = document.getElementById(`quiz-icon-${index}`);
+            
+            if (answer.classList.contains('show')) {
+                answer.classList.remove('show');
+                icon.textContent = '+';
+            } else {
+                answer.classList.add('show');
+                icon.textContent = '−';
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listeners to navigation tabs
+            const navTabs = document.querySelectorAll('.nav-tab');
+            navTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    switchTab(this.getAttribute('data-tab'));
+                });
+            });
+
+            // Generate quiz questions
+            const quizContainer = document.getElementById('quiz-container');
+            quizQuestions.forEach((item, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question';
+                questionDiv.innerHTML = `
+                    <div class="quiz-question-header" onclick="toggleQuizAnswer(${index})">
+                        <h4 style="font-weight: 500; color: #1f2937;">${index + 1}. ${item.question}</h4>
+                        <span class="expand-icon" id="quiz-icon-${index}">+</span>
+                    </div>
+                    <div class="quiz-answer" id="quiz-answer-${index}">
+                        <p style="color: #374151; line-height: 1.6;"><strong>Reponse:</strong> ${item.answer}</p>
+                    </div>
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+        });
+    </script>
+</body>
+</html>
